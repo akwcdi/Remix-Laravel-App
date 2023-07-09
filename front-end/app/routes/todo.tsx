@@ -1,5 +1,6 @@
 import type { LinksFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import type { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
 import Input from "front-end/app/components/Input";
 import TodoList, { todoListlinks } from "front-end/app/components/TodoList";
@@ -30,6 +31,11 @@ const Todo = () => {
     setTodoList(defaultTodos);
   }, []);
 
+  const onClickComplete = () => {
+    console.log(todoList);
+    // ここにserver.tsから値をsetする関数を呼び出す
+  };
+
   const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(event.target.value);
 
@@ -39,12 +45,20 @@ const Todo = () => {
       { id: todoList?.length ?? 0, todos: inputTodo },
     ];
     setTodoList(newList);
-    console.log(newList);
     setInputTodo("");
   };
 
-  const onClickComplete = () => {
-    console.log(todoList);
+  const onClickDelete: (
+    index: number
+  ) => MouseEventHandler<HTMLButtonElement> | undefined = (index: number) => {
+    if (index !== undefined) {
+      return (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const deletedList = [...(todoList ?? [])];
+        deletedList?.splice(index, 1);
+        setTodoList(deletedList);
+      };
+    }
+    return undefined;
     // ここにserver.tsから値をsetする関数を呼び出す
   };
 
@@ -55,12 +69,16 @@ const Todo = () => {
         <Input
           input={inputTodo}
           onChange={onChangeTodoText}
-          onClick={onClickInput}
+          onClickInput={onClickInput}
           labelName="Input Todo:"
           buttonName="追加"
         />
       </div>
-      <TodoList todoList={todoList ?? []} />
+      <TodoList
+        todoList={todoList ?? []}
+        onClickDelete={onClickDelete}
+        buttonName="削除"
+      />
     </div>
   );
 };

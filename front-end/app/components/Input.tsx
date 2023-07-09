@@ -1,7 +1,7 @@
 export type InputProps = {
   input: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
+  onClickInput: () => void;
   labelName?: string;
   buttonName?: string;
 };
@@ -9,7 +9,7 @@ export type InputProps = {
 const Input: React.FC<InputProps> = ({
   input,
   onChange,
-  onClick,
+  onClickInput,
   labelName,
   buttonName,
 }) => {
@@ -17,7 +17,7 @@ const Input: React.FC<InputProps> = ({
     <div>
       <label>{labelName}</label>
       <input value={input} onChange={onChange}></input>
-      <button onClick={onClick}>{buttonName}</button>
+      <button onClick={onClickInput}>{buttonName}</button>
     </div>
   );
 };
