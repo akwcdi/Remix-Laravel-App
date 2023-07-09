@@ -1,0 +1,47 @@
+version: "3.8"
+services:
+  backend:
+    build: ./docker/php
+    container_name: ${PROJECT_NAME}_backend
+    image: ${PROJECT_NAME}_backend
+    volumes:
+      - ../backend:/work
+      - ./docker/php/.msmtprc:/root/.msmtprc
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+  web:
+    build: ./docker/nginx
+    container_name: ${PROJECT_NAME}_web
+    image: ${PROJECT_NAME}_web
+    ports:
+      - 8000:80
+    volumes:
+      - ../backend:/work
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    working_dir: /work
+  db:
+    build: ./docker/mariadb
+    container_name: ${PROJECT_NAME}_db
+    image: ${PROJECT_NAME}_db
+    ports:
+      - 33060:3306
+    volumes:
+      - db-store:/var/lib/mysql
+  smtp:
+    build: ./docker/mailer
+    container_name: ${PROJECT_NAME}_smtp
+    image: ${PROJECT_NAME}_smtp
+    ports:
+      - 1025:1025
+      - 8025:8025
+  phpmyadmin:
+    build: ./docker/phpmyadmin
+    container_name: ${PROJECT_NAME}_phpmyadmin
+    image: ${PROJECT_NAME}_phpmyadmin
+    ports:
+      - 8888:80
+    links:
+      - db
+
+volumes:
+  db-store:
+    name: ${PROJECT_NAME}_db-store

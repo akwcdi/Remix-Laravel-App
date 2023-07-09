@@ -1,0 +1,6 @@
+FROM phpmyadmin/phpmyadmin
+
+ENV PMA_ARBITRARY=1 \
+  PMA_HOST=db \
+  PMA_USER=root \
+  PMA_PASSWORD=secret
