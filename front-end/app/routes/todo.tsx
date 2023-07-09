@@ -23,21 +23,24 @@ const Todo = () => {
 
   const defaultTodos = useLoaderData<typeof loader>()?.defaultTodos;
 
-  const [todoCount, setTodoCount] = useState(1);
   const [inputTodo, setInputTodo] = useState("");
   const [todoList, setTodoList] = useState<Todos[]>();
-  const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setInputTodo(event.target.value);
 
   useEffect(() => {
     setTodoList(defaultTodos);
   }, []);
 
+  const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setInputTodo(event.target.value);
+
   const onClickInput = () => {
-    const newList = [...(todoList ?? []), { id: todoCount, todos: inputTodo }];
+    const newList = [
+      ...(todoList ?? []),
+      { id: todoList?.length ?? 0, todos: inputTodo },
+    ];
     setTodoList(newList);
+    console.log(newList);
     setInputTodo("");
-    setTodoCount(todoCount + 1);
   };
 
   const onClickComplete = () => {

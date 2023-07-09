@@ -12,8 +12,8 @@ export const todoListlinks: LinksFunction = () => {
 };
 
 const TodoList: React.FC<ListProps> = ({ todoList }) => {
-  const todo = todoList.map((t, index) => (
-    <ul key={index}>
+  const todo = todoList.map((t) => (
+    <ul key={t.id}>
       <li>
         {t.todos} <button>削除</button>
       </li>
