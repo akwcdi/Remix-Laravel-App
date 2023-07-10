@@ -22,9 +22,10 @@ const TodoList: React.FC<ListProps> = ({
   buttonName,
 }) => {
   const todo = todoList.map((t, index) => (
-    <ul key={t.id}>
+    <ul key={t.newId}>
       <li>
-        {t.todos} <button onClick={onClickDelete(index)}>{buttonName}</button>
+        index:{index}:id:{t.id}:newId:{t.newId}:{t.todos}{" "}
+        <button onClick={onClickDelete(index)}>{buttonName}</button>
       </li>
     </ul>
   ));

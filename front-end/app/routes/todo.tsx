@@ -6,6 +6,7 @@ import Input from "front-end/app/components/Input";
 import TodoList, { todoListlinks } from "front-end/app/components/TodoList";
 import type { Todos } from "front-end/app/models/todo.server";
 import { getTodos } from "front-end/app/models/todo.server";
+import { v4 as uuidv4 } from "uuid";
 
 import styles from "front-end/app/styles/todo.css";
 
@@ -33,17 +34,15 @@ const Todo = () => {
 
   const onClickComplete = () => {
     console.log(todoList);
-    // ここにserver.tsから値をsetする関数を呼び出す
+    // ここにserver.tsから値をcreate,updateする関数を呼び出す
   };
 
   const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(event.target.value);
 
   const onClickInput = () => {
-    const newList = [
-      ...(todoList ?? []),
-      { id: todoList?.length ?? 0, todos: inputTodo },
-    ];
+    const newId = uuidv4();
+    const newList = [...(todoList ?? []), { newId: newId, todos: inputTodo }];
     setTodoList(newList);
     setInputTodo("");
   };
@@ -59,7 +58,7 @@ const Todo = () => {
       };
     }
     return undefined;
-    // ここにserver.tsから値をsetする関数を呼び出す
+    // ここにserver.tsから値をdeleteする関数を呼び出す
   };
 
   return (
