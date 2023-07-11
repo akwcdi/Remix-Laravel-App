@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Input from "front-end/app/components/Input";
 import TodoList, { todoListlinks } from "front-end/app/components/TodoList";
 import type { Todos } from "front-end/app/models/todo.server";
-import { getTodos } from "front-end/app/models/todo.server";
+import { deleteTodos, getTodos } from "front-end/app/models/todo.server";
 import { v4 as uuidv4 } from "uuid";
 
 import styles from "front-end/app/styles/todo.css";
@@ -51,10 +51,11 @@ const Todo = () => {
     index: number
   ) => MouseEventHandler<HTMLButtonElement> | undefined = (index: number) => {
     if (index !== undefined) {
-      return (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      return async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const deletedList = [...(todoList ?? [])];
         deletedList?.splice(index, 1);
         setTodoList(deletedList);
+        await deleteTodos(index);
       };
     }
     return undefined;
