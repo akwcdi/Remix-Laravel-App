@@ -41,6 +41,9 @@ const Todo = () => {
     setInputTodo(event.target.value);
 
   const onClickInput = () => {
+    if (inputTodo === "") {
+      return;
+    }
     const newId = uuidv4();
     const newList = [...(todoList ?? []), { newId: newId, todos: inputTodo }];
     setTodoList(newList);
