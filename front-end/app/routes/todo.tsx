@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import Input from "front-end/app/components/Input";
 import TodoList, { todoListlinks } from "front-end/app/components/TodoList";
 import type { Todos } from "front-end/app/models/todo.server";
-import { deleteTodos, getTodos } from "front-end/app/models/todo.server";
+import {
+  deleteTodos,
+  getTodos,
+  testTodos,
+} from "front-end/app/models/todo.server";
 import { v4 as uuidv4 } from "uuid";
 
 import styles from "front-end/app/styles/todo.css";
@@ -16,25 +20,30 @@ export const todolinks: LinksFunction = () => {
 
 export const loader = async () => {
   const defaultTodos = await getTodos();
-  return { defaultTodos };
+  const test = await testTodos();
+  return { defaultTodos, test };
 };
 
 const Todo = () => {
   // react-i18next needed
   //   const { t } = useTranslation();
 
-  const defaultTodos = useLoaderData<typeof loader>()?.defaultTodos;
+  const { defaultTodos, test } = useLoaderData<typeof loader>();
 
   const [inputTodo, setInputTodo] = useState("");
   const [todoList, setTodoList] = useState<Todos[]>();
 
   useEffect(() => {
     setTodoList(defaultTodos);
+    console.log(test);
   }, []);
 
   const onClickComplete = () => {
     console.log(todoList);
     // ここにserver.tsから値をcreate,updateする関数を呼び出す
+  };
+  const onClickTest = () => {
+    testTodos();
   };
 
   const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -69,6 +78,7 @@ const Todo = () => {
     <div>
       <div className="header">
         <button onClick={onClickComplete}>完了</button>
+        <button onClick={onClickTest}>test</button>
         <Input
           input={inputTodo}
           onChange={onChangeTodoText}
