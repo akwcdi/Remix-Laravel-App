@@ -14,4 +14,10 @@ module.exports = {
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
   },
+  devServer: {
+    // バックエンドサーバーのポートにプロキシする
+    proxy: {
+      "/api": "http://localhost:8000", // ここでの'8000'はバックエンドサーバーのポート番号
+    },
+  },
 };
