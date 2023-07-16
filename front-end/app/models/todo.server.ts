@@ -1,3 +1,5 @@
+import { apiUrl } from "~/util/url/url";
+
 export type Todos = {
   id?: number;
   newId: string;
@@ -12,7 +14,9 @@ export async function deleteTodos(id: number): Promise<number[]> {
   return [id];
 }
 export async function testTodos() {
-  const res = await fetch("http://localhost:8000/api/test", {
+  const url = apiUrl("/api/test");
+
+  const res = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
