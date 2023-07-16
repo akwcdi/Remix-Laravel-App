@@ -12,7 +12,7 @@ import {
 } from "frontend/app/models/todo.server";
 import { v4 as uuidv4 } from "uuid";
 
-import styles from "front-end/app/styles/todo.css";
+import styles from "frontend/app/styles/todo.css";
 
 export const todolinks: LinksFunction = () => {
   return [...todoListlinks(), { rel: "stylesheet", href: styles }];
