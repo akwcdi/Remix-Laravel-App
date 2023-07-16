@@ -17,7 +17,7 @@ module.exports = {
   devServer: {
     // バックエンドサーバーのポートにプロキシする
     proxy: {
-      "/api": "http://localhost:8000", // ここでの'8000'はバックエンドサーバーのポート番号
+      "/api": process.env.BACKEND_URL,
     },
   },
 };
