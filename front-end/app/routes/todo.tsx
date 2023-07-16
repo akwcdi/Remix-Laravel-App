@@ -42,9 +42,6 @@ const Todo = () => {
     console.log(todoList);
     // ここにserver.tsから値をcreate,updateする関数を呼び出す
   };
-  const onClickTest = () => {
-    testTodos();
-  };
 
   const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(event.target.value);
@@ -78,7 +75,6 @@ const Todo = () => {
     <div>
       <div className="header">
         <button onClick={onClickComplete}>完了</button>
-        <button onClick={onClickTest}>test</button>
         <Input
           input={inputTodo}
           onChange={onChangeTodoText}
