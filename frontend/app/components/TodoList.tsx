@@ -1,5 +1,5 @@
 import type { LinksFunction } from "@remix-run/node";
-import type { Todos } from "front-end/app/models/todo.server";
+import type { Todos } from "frontend/app/models/todo.server";
 
 import styles from "front-end/app/styles/todo.css";
 import type { MouseEventHandler } from "react";

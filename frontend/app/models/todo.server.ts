@@ -1,4 +1,4 @@
-import { apiUrl } from "~/util/url/url";
+import { apiUrl } from "frontend/app/util/url/url";
 
 export type Todos = {
   id?: number;

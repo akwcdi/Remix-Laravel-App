@@ -2,14 +2,14 @@ import type { LinksFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import type { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
-import Input from "front-end/app/components/Input";
-import TodoList, { todoListlinks } from "front-end/app/components/TodoList";
-import type { Todos } from "front-end/app/models/todo.server";
+import Input from "frontend/app/components/Input";
+import TodoList, { todoListlinks } from "frontend/app/components/TodoList";
+import type { Todos } from "frontend/app/models/todo.server";
 import {
   deleteTodos,
   getTodos,
   testTodos,
-} from "front-end/app/models/todo.server";
+} from "frontend/app/models/todo.server";
 import { v4 as uuidv4 } from "uuid";
 
 import styles from "front-end/app/styles/todo.css";
