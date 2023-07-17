@@ -19,6 +19,5 @@ Route::get('/test', function (Request $request) {
         'message' => 'This is a test endpoint'
     ]);
 });
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
+Route::get('/todos', 'TodoController@defaultTodos');
