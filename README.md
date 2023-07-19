@@ -1,24 +1,26 @@
-# Welcome to Remix!
+1.1 環境変数の準備
+ルートディレクトリの.env.development を.env として同階層にコピー
+/backend 内の.env.local を.env として同階層にコピー
+/server 内の.env.server を.env として同階層にコピー
 
-- [Remix Docs](https://remix.run/docs)
+1.2 コンテナの準備
+make build (初回立ち上げ)
+make up (2 回目以降)
+※終了時は make down
 
-## pnpm install
+1.3 backend コンテナ内に composer をインストール
+docker-compose exec backend composer install
 
-From your terminal:
-
-```sh
+2.1 ルートディレクトリで pnpm インストール
 pnpm install
-```
 
-## Development
-
-From your terminal:
+## デバッグ時立ち上げ
 
 ```sh
 pnpm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+(初回立ち上げ時に「Invalid URL」エラーが出た時は pnpm add dotenv)
 
 ## Deployment
 
