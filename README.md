@@ -1,8 +1,24 @@
 ## 1.1 環境変数の準備
 
-ルートディレクトリの.env.development を.env として同階層にコピー
-/backend 内の.env.local を.env として同階層にコピー
-/server 内の.env.server を.env として同階層にコピー
+以下の環境変数を.env として同階層にコピー
+
+ルートディレクトリ
+
+```sh
+.env.development
+```
+
+/backend
+
+```sh
+.env.local
+```
+
+/server
+
+```sh
+.env.server
+```
 
 ## 1.2 コンテナの準備
 
