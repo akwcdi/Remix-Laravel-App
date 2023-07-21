@@ -34,10 +34,6 @@ const Todo = () => {
   const [inputTodo, setInputTodo] = useState("");
   const [todoList, setTodoList] = useState<Todos[]>();
 
-  // const defaultList = {
-  //   defa,
-  // };
-
   useEffect(() => {
     setTodoList(
       defaultTodos.map((item) => {
