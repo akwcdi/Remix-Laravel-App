@@ -19,7 +19,8 @@ export const todolinks: LinksFunction = () => {
 };
 
 export const loader = async () => {
-  const defaultTodos = await getTodos();
+  const defaultRes = await getTodos();
+  const defaultTodos = defaultRes;
   const test = await testTodos();
   return { defaultTodos, test };
 };
@@ -28,14 +29,17 @@ const Todo = () => {
   // react-i18next needed
   //   const { t } = useTranslation();
 
-  const { defaultTodos, test } = useLoaderData<typeof loader>();
+  const { defaultTodos } = useLoaderData<typeof loader>();
 
   const [inputTodo, setInputTodo] = useState("");
   const [todoList, setTodoList] = useState<Todos[]>();
 
   useEffect(() => {
-    setTodoList(defaultTodos);
-    console.log(test);
+    setTodoList(
+      defaultTodos.map((item) => {
+        return item;
+      })
+    );
   }, []);
 
   const onClickComplete = () => {

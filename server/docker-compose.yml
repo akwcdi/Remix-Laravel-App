@@ -1,6 +1,13 @@
 version: "3.8"
 services:
   backend:
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=${PROJECT_NAME}_db
+      - DB_PORT=3306
+      - DB_DATABASE=laravel_local
+      - DB_USERNAME=admin
+      - DB_PASSWORD=secret
     build: ./docker/php
     container_name: ${PROJECT_NAME}_backend
     image: ${PROJECT_NAME}_backend
