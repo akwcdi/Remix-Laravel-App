@@ -6,6 +6,7 @@ import Input from "frontend/app/components/Input";
 import TodoList, { todoListlinks } from "frontend/app/components/TodoList";
 import type { Todos } from "frontend/app/models/todo.server";
 import {
+  completeTodos,
   deleteTodos,
   getTodos,
   testTodos,
@@ -21,15 +22,16 @@ export const todolinks: LinksFunction = () => {
 export const loader = async () => {
   const defaultRes = await getTodos();
   const defaultTodos = defaultRes;
+  const completeList = await completeTodos();
   const test = await testTodos();
-  return { defaultTodos, test };
+  return { defaultTodos, completeList, test };
 };
 
 const Todo = () => {
   // react-i18next needed
   //   const { t } = useTranslation();
 
-  const { defaultTodos } = useLoaderData<typeof loader>();
+  const { defaultTodos, completeList } = useLoaderData<typeof loader>();
 
   const [inputTodo, setInputTodo] = useState("");
   const [todoList, setTodoList] = useState<Todos[]>();
@@ -43,7 +45,7 @@ const Todo = () => {
   }, []);
 
   const onClickComplete = () => {
-    console.log(todoList);
+    setTodoList(completeList);
     // ここにserver.tsから値をcreate,updateする関数を呼び出す
   };
 
