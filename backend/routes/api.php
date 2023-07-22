@@ -21,3 +21,4 @@ Route::get('/test', function (Request $request) {
 });
 
 Route::get('/todos', 'TodoController@defaultTodos');
+Route::get('/todos/delete/{id}', 'TodoController@deleteTodo');

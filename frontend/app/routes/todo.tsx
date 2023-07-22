@@ -19,8 +19,7 @@ export const todolinks: LinksFunction = () => {
 };
 
 export const loader = async () => {
-  const defaultRes = await getTodos();
-  const defaultTodos = defaultRes;
+  const defaultTodos = await getTodos();
   const test = await testTodos();
   return { defaultTodos, test };
 };
@@ -63,16 +62,22 @@ const Todo = () => {
   const onClickDelete: (
     index: number
   ) => MouseEventHandler<HTMLButtonElement> | undefined = (index: number) => {
-    if (index !== undefined) {
-      return async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        const deletedList = [...(todoList ?? [])];
-        deletedList?.splice(index, 1);
-        setTodoList(deletedList);
-        await deleteTodos(index);
-      };
-    }
-    return undefined;
-    // ここにserver.tsから値をdeleteする関数を呼び出す
+    return async (event: React.MouseEvent<HTMLButtonElement>) => {
+      const updatedList = [...(todoList ?? [])];
+      const itemId = updatedList[index].id;
+      const deleteId = updatedList[index].newId;
+
+      try {
+        setTodoList((todoList) =>
+          todoList?.filter((item) => item.newId !== deleteId)
+        );
+        if (itemId !== undefined) {
+          await deleteTodos(itemId);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
   };
 
   return (

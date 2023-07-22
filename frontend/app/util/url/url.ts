@@ -5,3 +5,4 @@ export const apiUrl = (path: string) => {
 };
 
 export const defaultUrl = apiUrl("/api/todos");
+export const deleteUrl = apiUrl("/api/todos/delete");
