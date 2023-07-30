@@ -9,15 +9,26 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TodoController extends Controller
 {
-    
-    public function defaultTodos(Request $request){
-        try{
+
+    public function defaultTodos(Request $request)
+    {
+        try {
             $todos = Todo::all();
 
             return response()->json($todos, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
-        } catch(Exception $e){
-            return response($e->getMessage(),Response::HTTP_INTERNAL_SERVER_ERROR);
+    public function completeTodos(Request $request)
+    {
+        try {
+            $todos = Todo::all();
+
+            return response()->json($todos, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

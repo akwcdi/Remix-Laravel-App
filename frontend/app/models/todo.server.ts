@@ -30,12 +30,7 @@ export async function testTodos() {
     },
   });
 
-  // Add this line to parse the response body as JSON
   const data = await res.json();
 
   return data;
 }
-
-// export async function setTodos(): Promise<Array<string>> {
-
-// }

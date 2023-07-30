@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import type { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
@@ -18,9 +18,8 @@ export const todolinks: LinksFunction = () => {
   return [...todoListlinks(), { rel: "stylesheet", href: styles }];
 };
 
-export const loader = async () => {
-  const defaultRes = await getTodos();
-  const defaultTodos = defaultRes;
+export const loader: LoaderFunction = async ({ request }) => {
+  const defaultTodos = await getTodos();
   const test = await testTodos();
   return { defaultTodos, test };
 };
@@ -36,16 +35,11 @@ const Todo = () => {
 
   useEffect(() => {
     setTodoList(
-      defaultTodos.map((item) => {
+      defaultTodos.map((item: Todos[]) => {
         return item;
       })
     );
   }, []);
-
-  const onClickComplete = () => {
-    console.log(todoList);
-    // ここにserver.tsから値をcreate,updateする関数を呼び出す
-  };
 
   const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(event.target.value);
@@ -78,7 +72,6 @@ const Todo = () => {
   return (
     <div>
       <div className="header">
-        <button onClick={onClickComplete}>完了</button>
         <Input
           input={inputTodo}
           onChange={onChangeTodoText}
