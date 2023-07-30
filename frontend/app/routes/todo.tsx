@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import type { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
@@ -6,7 +6,6 @@ import Input from "frontend/app/components/Input";
 import TodoList, { todoListlinks } from "frontend/app/components/TodoList";
 import type { Todos } from "frontend/app/models/todo.server";
 import {
-  completeTodos,
   deleteTodos,
   getTodos,
   testTodos,
@@ -19,35 +18,28 @@ export const todolinks: LinksFunction = () => {
   return [...todoListlinks(), { rel: "stylesheet", href: styles }];
 };
 
-export const loader = async () => {
-  const defaultRes = await getTodos();
-  const defaultTodos = defaultRes;
-  const completeList = await completeTodos();
+export const loader: LoaderFunction = async ({ request }) => {
+  const defaultTodos = await getTodos();
   const test = await testTodos();
-  return { defaultTodos, completeList, test };
+  return { defaultTodos, test };
 };
 
 const Todo = () => {
   // react-i18next needed
   //   const { t } = useTranslation();
 
-  const { defaultTodos, completeList } = useLoaderData<typeof loader>();
+  const { defaultTodos } = useLoaderData<typeof loader>();
 
   const [inputTodo, setInputTodo] = useState("");
   const [todoList, setTodoList] = useState<Todos[]>();
 
   useEffect(() => {
     setTodoList(
-      defaultTodos.map((item) => {
+      defaultTodos.map((item: Todos[]) => {
         return item;
       })
     );
   }, []);
-
-  const onClickComplete = () => {
-    setTodoList(completeList);
-    // ここにserver.tsから値をcreate,updateする関数を呼び出す
-  };
 
   const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(event.target.value);
@@ -80,7 +72,6 @@ const Todo = () => {
   return (
     <div>
       <div className="header">
-        <button onClick={onClickComplete}>完了</button>
         <Input
           input={inputTodo}
           onChange={onChangeTodoText}

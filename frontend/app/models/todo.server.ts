@@ -1,4 +1,4 @@
-import { apiUrl, completeUrl, defaultUrl } from "frontend/app/util/url/url";
+import { apiUrl, defaultUrl } from "frontend/app/util/url/url";
 
 export type Todos = {
   id?: number;
@@ -20,18 +20,6 @@ export async function getTodos(): Promise<Array<Todos>> {
 export async function deleteTodos(id: number): Promise<number[]> {
   return [id];
 }
-
-export async function completeTodos() {
-  const res = await fetch(completeUrl, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const data = await res.json();
-  return data;
-}
-
 export async function testTodos() {
   const url = apiUrl("/api/test");
 
@@ -42,12 +30,7 @@ export async function testTodos() {
     },
   });
 
-  // Add this line to parse the response body as JSON
   const data = await res.json();
 
   return data;
 }
-
-// export async function setTodos(): Promise<Array<string>> {
-
-// }

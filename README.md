@@ -46,6 +46,12 @@ make down
 docker-compose exec backend composer install
 ```
 
+## 1.4 backend コンテナ内でマイグレーション
+
+```sh
+docker-compose exec backend php artisan migrate
+```
+
 ## 2.1 ルートディレクトリで pnpm インストール
 
 ```sh

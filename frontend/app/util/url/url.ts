@@ -5,4 +5,3 @@ export const apiUrl = (path: string) => {
 };
 
 export const defaultUrl = apiUrl("/api/todos");
-export const completeUrl = apiUrl("/api/todos/complete");
