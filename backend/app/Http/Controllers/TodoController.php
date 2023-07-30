@@ -21,7 +21,7 @@ class TodoController extends Controller
         }
     }
 
-    public function completeTodos(Request $request)
+    public function createTodos(Request $request)
     {
         try {
             $todos = Todo::all();

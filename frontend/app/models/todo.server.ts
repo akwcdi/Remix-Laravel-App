@@ -1,4 +1,4 @@
-import { apiUrl, defaultUrl } from "frontend/app/util/url/url";
+import { apiUrl, defaultUrl, createUrl } from "frontend/app/util/url/url";
 
 export type Todos = {
   id?: number;
@@ -9,6 +9,17 @@ export type Todos = {
 export async function getTodos(): Promise<Array<Todos>> {
   const res = await fetch(defaultUrl, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await res.json();
+  return data;
+}
+
+export async function InputTodos(): Promise<Array<Todos>> {
+  const res = await fetch(createUrl, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },

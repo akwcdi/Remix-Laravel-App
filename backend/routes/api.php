@@ -21,4 +21,4 @@ Route::get('/test', function (Request $request) {
 });
 
 Route::get('/todos', 'TodoController@defaultTodos');
-Route::get('/todos/complete', 'TodoController@completeTodos');
+Route::post('/todos/create', 'TodoController@createTodos');
