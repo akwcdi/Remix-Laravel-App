@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Todo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class TodoController extends Controller
@@ -21,12 +22,12 @@ class TodoController extends Controller
         }
     }
 
-    public function createTodos(Request $request)
+    public function createTodos(Todo $todo, Request $request)
     {
         try {
-            $todos = Todo::all();
+            $todo->firstOrCreate(['newId' => $request->newId, 'todos' => $request->todo]);
 
-            return response()->json($todos, Response::HTTP_OK);
+            return response()->json(Response::HTTP_OK);
         } catch (Exception $e) {
             return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }

@@ -31,13 +31,11 @@ export const loader: LoaderFunction = async () => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.clone().formData();
-  console.log(formData);
   const intent = formData.get("intent");
   if (intent) {
     switch (intent) {
       case "createTodo": {
-        console.log(formData.data.todo);
-        const createTodo = await InputTodos();
+        const createTodo = await InputTodos(request);
         console.log(createTodo);
         return createTodo;
       }
@@ -94,7 +92,7 @@ const Todo = () => {
     setInputTodo("");
 
     fetcher.submit(
-      { intent: "createTodo", todo: inputTodo }, // Pass the intent and todo value as parameters
+      { intent: "createTodo", newId: newId, todo: inputTodo }, // Pass the intent and todo value as parameters
       { action: "/todo", method: "post" } // Specify the action and method
     );
   };
