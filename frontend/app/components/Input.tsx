@@ -1,7 +1,11 @@
+import { Form } from "@remix-run/react";
+
 export type InputProps = {
   input: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onClickInput: () => void;
+  onClickInput: (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => void;
   labelName?: string;
   buttonName?: string;
 };
@@ -15,9 +19,18 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div>
-      <label>{labelName}</label>
-      <input value={input} onChange={onChange}></input>
-      <button onClick={onClickInput}>{buttonName}</button>
+      <Form method="post" action="/todo">
+        <label>{labelName}</label>
+        <input
+          value={input}
+          onChange={onChange}
+          type="text"
+          name="todo"
+        ></input>
+        <button type="submit" onClick={onClickInput}>
+          {buttonName}
+        </button>
+      </Form>
     </div>
   );
 };

@@ -1,11 +1,16 @@
-import type { LinksFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import type {
+  ActionFunction,
+  LinksFunction,
+  LoaderFunction,
+} from "@remix-run/node";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import type { MouseEventHandler } from "react";
 import { useEffect, useState } from "react";
 import Input from "frontend/app/components/Input";
 import TodoList, { todoListlinks } from "frontend/app/components/TodoList";
 import type { Todos } from "frontend/app/models/todo.server";
 import {
+  InputTodos,
   deleteTodos,
   getTodos,
   testTodos,
@@ -18,10 +23,38 @@ export const todolinks: LinksFunction = () => {
   return [...todoListlinks(), { rel: "stylesheet", href: styles }];
 };
 
-export const loader = async () => {
+export const loader: LoaderFunction = async () => {
   const defaultTodos = await getTodos();
   const test = await testTodos();
   return { defaultTodos, test };
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.clone().formData();
+  const intent = formData.get("intent");
+  if (intent) {
+    switch (intent) {
+      case "createTodo": {
+        const createTodo = await InputTodos(request);
+        console.log(createTodo);
+        return createTodo;
+      }
+      case "deleteUser": {
+        // ユーザーの削除処理
+        console.log(2);
+        return null; // 何も返すものがない場合はnullを返す
+      }
+      default: {
+        console.log(3);
+        // intentがcreateUserでもdeleteUserでもない場合は、何かを返す
+        return null;
+      }
+    }
+  } else {
+    // intentが存在しない場合は、何かを返す
+    console.log(4);
+    return null;
+  }
 };
 
 const Todo = () => {
@@ -33,23 +66,23 @@ const Todo = () => {
   const [inputTodo, setInputTodo] = useState("");
   const [todoList, setTodoList] = useState<Todos[]>();
 
+  const fetcher = useFetcher();
+
   useEffect(() => {
     setTodoList(
-      defaultTodos.map((item) => {
+      defaultTodos.map((item: Todos[]) => {
         return item;
       })
     );
   }, []);
 
-  const onClickComplete = () => {
-    console.log(todoList);
-    // ここにserver.tsから値をcreate,updateする関数を呼び出す
-  };
-
   const onChangeTodoText = (event: React.ChangeEvent<HTMLInputElement>) =>
     setInputTodo(event.target.value);
 
-  const onClickInput = () => {
+  const onClickInput = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault(); // Prevent the default form submission
     if (inputTodo === "") {
       return;
     }
@@ -57,6 +90,11 @@ const Todo = () => {
     const newList = [...(todoList ?? []), { newId: newId, todos: inputTodo }];
     setTodoList(newList);
     setInputTodo("");
+
+    fetcher.submit(
+      { intent: "createTodo", newId: newId, todo: inputTodo }, // Pass the intent and todo value as parameters
+      { action: "/todo", method: "post" } // Specify the action and method
+    );
   };
 
   const onClickDelete: (
@@ -83,7 +121,6 @@ const Todo = () => {
   return (
     <div>
       <div className="header">
-        <button onClick={onClickComplete}>完了</button>
         <Input
           input={inputTodo}
           onChange={onChangeTodoText}
