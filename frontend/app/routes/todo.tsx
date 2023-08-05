@@ -36,23 +36,16 @@ export const action: ActionFunction = async ({ request }) => {
     switch (intent) {
       case "createTodo": {
         const createTodo = await InputTodos(request);
-        console.log(createTodo);
         return createTodo;
       }
-      case "deleteUser": {
+      case "deleteTodo": {
         // ユーザーの削除処理
-        console.log(2);
-        return null; // 何も返すものがない場合はnullを返す
-      }
-      default: {
-        console.log(3);
-        // intentがcreateUserでもdeleteUserでもない場合は、何かを返す
-        return null;
+        const deleteTodo = await deleteTodos(request);
+        return deleteTodo;
       }
     }
   } else {
     // intentが存在しない場合は、何かを返す
-    console.log(4);
     return null;
   }
 };
@@ -100,16 +93,17 @@ const Todo = () => {
   const onClickDelete: (
     index: number
   ) => MouseEventHandler<HTMLButtonElement> | undefined = (index: number) => {
-    if (index !== undefined) {
-      return async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        const deletedList = [...(todoList ?? [])];
-        deletedList?.splice(index, 1);
-        setTodoList(deletedList);
-        await deleteTodos(index);
-      };
-    }
-    return undefined;
-    // ここにserver.tsから値をdeleteする関数を呼び出す
+    return async (event: React.MouseEvent<HTMLButtonElement>) => {
+      const updatedList = [...(todoList ?? [])];
+      const deleteId = updatedList[index].newId;
+      setTodoList((todoList) =>
+        todoList?.filter((item) => item.newId !== deleteId)
+      );
+      fetcher.submit(
+        { intent: "deleteTodo", newId: deleteId }, // Pass the intent and todo value as parameters
+        { action: "/todo", method: "post" } // Specify the action and method
+      );
+    };
   };
 
   return (

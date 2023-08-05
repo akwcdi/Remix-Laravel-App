@@ -22,3 +22,4 @@ Route::get('/test', function (Request $request) {
 
 Route::get('/todos', 'TodoController@defaultTodos');
 Route::post('/todos/create', 'TodoController@createTodos');
+Route::post('/todos/delete', 'TodoController@deleteTodos');

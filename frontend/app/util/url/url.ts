@@ -6,3 +6,4 @@ export const apiUrl = (path: string) => {
 
 export const defaultUrl = apiUrl("/api/todos");
 export const createUrl = apiUrl("/api/todos/create");
+export const deleteUrl = apiUrl("/api/todos/delete");
