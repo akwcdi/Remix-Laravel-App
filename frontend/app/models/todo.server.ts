@@ -37,16 +37,16 @@ export async function InputTodos(request: Request): Promise<Array<Todos>> {
   return data;
 }
 
-export const deleteTodos = async (id: number) => {
-  const intId = Number(id);
-  if (Number.isNaN(intId)) {
-    return console.log("Invalid id");
-  }
-  const res = await fetch(`${deleteUrl}/${id}`, {
-    method: "GET",
+export const deleteTodos = async (request: Request) => {
+  const formData = await request.clone().formData();
+  const newId = formData.get("newId");
+
+  const res = await fetch(deleteUrl, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ newId }),
   });
   const data = await res.json();
   return data;
