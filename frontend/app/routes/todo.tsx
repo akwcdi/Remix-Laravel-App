@@ -39,13 +39,12 @@ export const action: ActionFunction = async ({ request }) => {
         return createTodo;
       }
       case "deleteTodo": {
-        // ユーザーの削除処理
         const deleteTodo = await deleteTodos(request);
         return deleteTodo;
       }
     }
   } else {
-    // intentが存在しない場合は、何かを返す
+    // intentが存在しない場合はnullを返す
     return null;
   }
 };
@@ -75,7 +74,7 @@ const Todo = () => {
   const onClickInput = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
     if (inputTodo === "") {
       return;
     }
@@ -100,8 +99,8 @@ const Todo = () => {
         todoList?.filter((item) => item.newId !== deleteId)
       );
       fetcher.submit(
-        { intent: "deleteTodo", newId: deleteId }, // Pass the intent and todo value as parameters
-        { action: "/todo", method: "post" } // Specify the action and method
+        { intent: "deleteTodo", newId: deleteId },
+        { action: "/todo", method: "post" }
       );
     };
   };
