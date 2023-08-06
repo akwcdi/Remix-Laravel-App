@@ -44,11 +44,13 @@ input:focus {
   color: white;
   padding: auto;
   cursor: pointer;
+  margin-left: 20px;
+  margin-right: auto;
 }
 
 .todo .delete-button {
-  background: #da2121;
-  border-color: #da2121;
+  background: red;
+  border-color: red;
   border-radius: 3px;
   color: white;
   padding: auto;
@@ -73,7 +75,7 @@ button:active {
 }
 
 .todo li {
-  margin: 1rem 0;
+  margin: 0.2rem 0;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
