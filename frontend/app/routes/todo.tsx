@@ -104,16 +104,14 @@ const Todo = () => {
   };
 
   return (
-    <div>
-      <div className="header">
-        <Input
-          input={inputTodo}
-          onChange={onChangeTodoText}
-          onClickInput={onClickInput}
-          labelName="Input Todo:"
-          buttonName="追加"
-        />
-      </div>
+    <div className="todo">
+      <Input
+        input={inputTodo}
+        onChange={onChangeTodoText}
+        onClickInput={onClickInput}
+        labelName="Input Todo:"
+        buttonName="追加"
+      />
       <TodoList
         todoList={todoList ?? []}
         onClickDelete={onClickDelete}
