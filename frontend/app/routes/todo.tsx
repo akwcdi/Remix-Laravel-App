@@ -13,7 +13,6 @@ import {
   InputTodos,
   deleteTodos,
   getTodos,
-  testTodos,
 } from "frontend/app/models/todo.server";
 import { v4 as uuidv4 } from "uuid";
 
@@ -25,8 +24,7 @@ export const todolinks: LinksFunction = () => {
 
 export const loader: LoaderFunction = async () => {
   const defaultTodos = await getTodos();
-  const test = await testTodos();
-  return { defaultTodos, test };
+  return { defaultTodos };
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -39,13 +37,12 @@ export const action: ActionFunction = async ({ request }) => {
         return createTodo;
       }
       case "deleteTodo": {
-        // ユーザーの削除処理
         const deleteTodo = await deleteTodos(request);
         return deleteTodo;
       }
     }
   } else {
-    // intentが存在しない場合は、何かを返す
+    // intentが存在しない場合はnullを返す
     return null;
   }
 };
@@ -75,7 +72,7 @@ const Todo = () => {
   const onClickInput = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
     if (inputTodo === "") {
       return;
     }
@@ -100,23 +97,21 @@ const Todo = () => {
         todoList?.filter((item) => item.newId !== deleteId)
       );
       fetcher.submit(
-        { intent: "deleteTodo", newId: deleteId }, // Pass the intent and todo value as parameters
-        { action: "/todo", method: "post" } // Specify the action and method
+        { intent: "deleteTodo", newId: deleteId },
+        { action: "/todo", method: "post" }
       );
     };
   };
 
   return (
-    <div>
-      <div className="header">
-        <Input
-          input={inputTodo}
-          onChange={onChangeTodoText}
-          onClickInput={onClickInput}
-          labelName="Input Todo:"
-          buttonName="追加"
-        />
-      </div>
+    <div className="todo">
+      <Input
+        input={inputTodo}
+        onChange={onChangeTodoText}
+        onClickInput={onClickInput}
+        labelName="Input Todo:"
+        buttonName="追加"
+      />
       <TodoList
         todoList={todoList ?? []}
         onClickDelete={onClickDelete}

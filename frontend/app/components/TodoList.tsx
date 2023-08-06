@@ -25,11 +25,13 @@ const TodoList: React.FC<ListProps> = ({
     <ul key={t.newId}>
       <li>
         index:{index}:id:{t.id}:newId:{t.newId}:{t.todos}{" "}
-        <button onClick={onClickDelete(index)}>{buttonName}</button>
+        <button className="delete-button" onClick={onClickDelete(index)}>
+          {buttonName}
+        </button>
       </li>
     </ul>
   ));
-  return <div>{todo}</div>;
+  return <>{todo}</>;
 };
 
 export default TodoList;

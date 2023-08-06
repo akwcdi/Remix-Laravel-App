@@ -18,7 +18,7 @@ const Input: React.FC<InputProps> = ({
   buttonName,
 }) => {
   return (
-    <div>
+    <div className="input">
       <Form method="post" action="/todo">
         <label>{labelName}</label>
         <input

@@ -14,12 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', function (Request $request) {
-    return response()->json([
-        'message' => 'This is a test endpoint'
-    ]);
-});
-
 Route::get('/todos', 'TodoController@defaultTodos');
 Route::post('/todos/create', 'TodoController@createTodos');
 Route::post('/todos/delete', 'TodoController@deleteTodos');

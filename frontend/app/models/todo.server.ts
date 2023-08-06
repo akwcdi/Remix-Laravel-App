@@ -1,9 +1,4 @@
-import {
-  apiUrl,
-  defaultUrl,
-  createUrl,
-  deleteUrl,
-} from "frontend/app/util/url/url";
+import { defaultUrl, createUrl, deleteUrl } from "frontend/app/util/url/url";
 
 export type Todos = {
   id?: number;
@@ -51,18 +46,3 @@ export const deleteTodos = async (request: Request) => {
   const data = await res.json();
   return data;
 };
-
-export async function testTodos() {
-  const url = apiUrl("/api/test");
-
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await res.json();
-
-  return data;
-}
