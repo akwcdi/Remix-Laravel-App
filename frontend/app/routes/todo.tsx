@@ -13,7 +13,6 @@ import {
   InputTodos,
   deleteTodos,
   getTodos,
-  testTodos,
 } from "frontend/app/models/todo.server";
 import { v4 as uuidv4 } from "uuid";
 
@@ -25,8 +24,7 @@ export const todolinks: LinksFunction = () => {
 
 export const loader: LoaderFunction = async () => {
   const defaultTodos = await getTodos();
-  const test = await testTodos();
-  return { defaultTodos, test };
+  return { defaultTodos };
 };
 
 export const action: ActionFunction = async ({ request }) => {

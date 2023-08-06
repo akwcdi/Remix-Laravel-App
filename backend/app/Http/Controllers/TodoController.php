@@ -35,7 +35,6 @@ class TodoController extends Controller
     public function deleteTodos(Todo $todo, Request $request)
     {
         try {
-            Log::debug($request);
             $todo->where('newId', $request->newId)->delete();
 
             return response()->json(Response::HTTP_OK);
