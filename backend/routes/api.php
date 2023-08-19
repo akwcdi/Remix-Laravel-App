@@ -17,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/todos', 'TodoController@defaultTodos');
 Route::post('/todos/create', 'TodoController@createTodos');
 Route::post('/todos/delete', 'TodoController@deleteTodos');
+Route::post('/todos/update', 'TodoController@updateTodos');
