@@ -5,26 +5,21 @@
 }
 
 .todo .input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font: inherit;
   padding: 0.25rem;
   margin: 1rem 0;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
-}
-
-.todo .input .form {
-  display: flex;
-  width: 90%;
-  max-width: 40rem;
-  margin: 2rem auto;
-}
-
-.todo .input .label,
-.todo .input .input {
-  display: block;
-  width: 100%;
-  padding: auto;
+  .form {
+    width: 90%;
+    max-width: 40rem;
+    margin: 2rem auto;
+    gap: 10px;
+  }
 }
 
 .label {
@@ -44,8 +39,7 @@ input:focus {
   color: white;
   padding: auto;
   cursor: pointer;
-  margin-left: 20px;
-  margin-right: auto;
+  margin-left: 10px;
 }
 
 .todo .delete-button {
@@ -75,8 +69,14 @@ button:active {
 }
 
 .todo li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0.2rem 0;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
+  .button-group {
+    display: flex;
+  }
 }
