@@ -1,4 +1,9 @@
-import { defaultUrl, createUrl, deleteUrl } from "frontend/app/util/url/url";
+import {
+  defaultUrl,
+  createUrl,
+  deleteUrl,
+  updateUrl,
+} from "frontend/app/util/url/url";
 
 export type Todos = {
   id?: number;
@@ -31,6 +36,22 @@ export async function InputTodos(request: Request): Promise<Array<Todos>> {
   const data = await res.json();
   return data;
 }
+
+export const updateTodos = async (request: Request) => {
+  const formData = await request.clone().formData();
+  const newId = formData.get("newId");
+  const todo = formData.get("todos");
+
+  const res = await fetch(updateUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ newId, todo }),
+  });
+  const data = await res.json();
+  return data;
+};
 
 export const deleteTodos = async (request: Request) => {
   const formData = await request.clone().formData();

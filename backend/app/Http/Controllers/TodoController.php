@@ -42,4 +42,26 @@ class TodoController extends Controller
             return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    public function updateTodos(Todo $todo, Request $request)
+    {
+        try {
+            Log::debug($todo);
+            Log::debug($request);
+
+            $updateTodo = $todo->where('newId', $request->newId)->first();
+
+            if ($updateTodo) {
+                $updateTodo->todos = $request->todo;
+                $updateTodo->save();
+            } else {
+                return;
+            }
+
+
+            return response()->json(Response::HTTP_OK);
+        } catch (Exception $e) {
+            return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

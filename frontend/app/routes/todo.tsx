@@ -13,6 +13,7 @@ import {
   InputTodos,
   deleteTodos,
   getTodos,
+  updateTodos,
 } from "frontend/app/models/todo.server";
 import { v4 as uuidv4 } from "uuid";
 
@@ -35,6 +36,10 @@ export const action: ActionFunction = async ({ request }) => {
       case "createTodo": {
         const createTodo = await InputTodos(request);
         return createTodo;
+      }
+      case "updateTodo": {
+        const updateTodo = await updateTodos(request);
+        return updateTodo;
       }
       case "deleteTodo": {
         const deleteTodo = await deleteTodos(request);
@@ -87,12 +92,30 @@ const Todo = () => {
     );
   };
 
+  const onClickUpdate = (index: number, editedValue: string) => {
+    if (todoList) {
+      const updatedList = [...todoList];
+      const updateId = updatedList[index].newId;
+
+      setTodoList((prevTodoList) =>
+        prevTodoList?.map((item) =>
+          item.newId === updateId ? { ...item, todos: editedValue } : item
+        )
+      );
+
+      fetcher.submit(
+        { intent: "updateTodo", newId: updateId, todos: editedValue },
+        { action: "/todo", method: "post" }
+      );
+    }
+  };
+
   const onClickDelete: (
     index: number
   ) => MouseEventHandler<HTMLButtonElement> | undefined = (index: number) => {
     return async (event: React.MouseEvent<HTMLButtonElement>) => {
-      const updatedList = [...(todoList ?? [])];
-      const deleteId = updatedList[index].newId;
+      const deleteList = [...(todoList ?? [])];
+      const deleteId = deleteList[index].newId;
       setTodoList((todoList) =>
         todoList?.filter((item) => item.newId !== deleteId)
       );
@@ -114,8 +137,10 @@ const Todo = () => {
       />
       <TodoList
         todoList={todoList ?? []}
+        onClickUpdate={(index, editedValue) =>
+          onClickUpdate(index, editedValue)
+        }
         onClickDelete={onClickDelete}
-        buttonName="削除"
       />
     </div>
   );
