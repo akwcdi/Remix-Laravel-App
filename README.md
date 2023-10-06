@@ -11,13 +11,7 @@
 /backend
 
 ```sh
-.env.local
-```
-
-/server
-
-```sh
-.env.server
+.env.example
 ```
 
 ## 1.2 コンテナの準備
@@ -38,18 +32,6 @@ make up
 
 ```sh
 make down
-```
-
-## 1.3 backend コンテナ内に composer をインストール
-
-```sh
-docker-compose exec backend composer install
-```
-
-## 1.4 backend コンテナ内でマイグレーション
-
-```sh
-docker-compose exec backend php artisan migrate
 ```
 
 ## 2.1 ルートディレクトリで pnpm インストール
