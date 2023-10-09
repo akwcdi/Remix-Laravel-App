@@ -34,14 +34,8 @@ make up
 make down
 ```
 
-## 2.1 ルートディレクトリで pnpm インストール
-
-```sh
-pnpm install
-```
+## 2.1 サイト立ち上げ
 
 ```sh
 pnpm run dev
 ```
-
-(初回立ち上げ時に「Invalid URL」エラーが出た時は pnpm add dotenv)
