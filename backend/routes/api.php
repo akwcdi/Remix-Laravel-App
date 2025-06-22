@@ -1,20 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TodoController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-Route::get('/todos', 'TodoController@defaultTodos');
-Route::post('/todos/create', 'TodoController@createTodos');
-Route::post('/todos/delete', 'TodoController@deleteTodos');
-Route::post('/todos/update', 'TodoController@updateTodos');
+Route::get('todos', [TodoController::class, 'defaultTodos']);
+Route::post('todos/create', [TodoController::class, 'createTodos']);
+Route::post('todos/delete', [TodoController::class, 'deleteTodos']);
+Route::post('todos/update', [TodoController::class, 'updateTodos']);

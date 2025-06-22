@@ -2,65 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Todo;
-use Exception;
+use App\Services\TodoService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class TodoController extends Controller
 {
-    public function defaultTodos(Request $request)
+    protected TodoService $todoService;
+
+    public function __construct(TodoService $todoService)
+    {
+        $this->todoService = $todoService;
+    }
+
+    public function defaultTodos()
+{
+    try {
+        $todos = $this->todoService->getAllTodos();
+        return response()->json($todos, Response::HTTP_OK);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => $e->getMessage(),
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}
+
+
+    public function createTodos(Request $request)
     {
         try {
-            $todos = Todo::all();
-
-            return response()->json($todos, Response::HTTP_OK);
-        } catch (Exception $e) {
+            $this->todoService->createTodo($request->newId, $request->todo);
+            return response()->json(Response::HTTP_OK);
+        } catch (\Exception $e) {
             return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function createTodos(Todo $todo, Request $request)
+    public function deleteTodos(Request $request)
     {
         try {
-            $todo->firstOrCreate(['newId' => $request->newId, 'todos' => $request->todo]);
-
+            $this->todoService->deleteTodo($request->newId);
             return response()->json(Response::HTTP_OK);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function deleteTodos(Todo $todo, Request $request)
+    public function updateTodos(Request $request)
     {
         try {
-            $todo->where('newId', $request->newId)->delete();
-
+            $this->todoService->updateTodo($request->newId, $request->todo);
             return response()->json(Response::HTTP_OK);
-        } catch (Exception $e) {
-            return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public function updateTodos(Todo $todo, Request $request)
-    {
-        try {
-            Log::debug($todo);
-            Log::debug($request);
-
-            $updateTodo = $todo->where('newId', $request->newId)->first();
-
-            if ($updateTodo) {
-                $updateTodo->todos = $request->todo;
-                $updateTodo->save();
-            } else {
-                return;
-            }
-
-
-            return response()->json(Response::HTTP_OK);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
