@@ -18,9 +18,18 @@ export async function getTodos(): Promise<Array<Todos>> {
       "Content-Type": "application/json",
     },
   });
-  const data = await res.json();
-  return data;
+
+  const contentType = res.headers.get("content-type");
+  const text = await res.text();
+
+  if (contentType && contentType.includes("application/json")) {
+    return JSON.parse(text); // safe
+  } else {
+    console.error("⚠️ API response is not JSON:", text);
+    throw new Error("API response is not valid JSON");
+  }
 }
+
 
 export async function InputTodos(request: Request): Promise<Array<Todos>> {
   const formData = await request.clone().formData();
